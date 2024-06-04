@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreChirpsRequest;
 use App\Models\Chirp;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,7 +14,7 @@ class ChirpController extends Controller
      */
     public function index(): View
     {
-        return view('chirps.index');
+        return view('chirps.index', ['chirps' => Chirp::with('user')->latest()->get()]);
     }
 
     /**
@@ -27,9 +28,10 @@ class ChirpController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreChirpsRequest $request)
     {
-        //
+        $request->user()->chirps()->create($request->validated());
+        return redirect(route('chirps.index'));
     }
 
     /**
