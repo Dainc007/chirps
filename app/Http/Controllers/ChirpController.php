@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChirpsRequest;
 use App\Models\Chirp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class ChirpController extends Controller
@@ -47,15 +48,21 @@ class ChirpController extends Controller
      */
     public function edit(Chirp $chirp)
     {
-        //
+        Gate::authorize('update', $chirp);
+
+        return view('chirps.edit', ['chirp' => $chirp]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Chirp $chirp)
+    public function update(StoreChirpsRequest $request, Chirp $chirp)
     {
-        //
+        Gate::authorize('update', $chirp);
+
+        $chirp->update($request->validated());
+
+        return redirect(route('chirps.index'));
     }
 
     /**
