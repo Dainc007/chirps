@@ -11,6 +11,10 @@ simple CRUD application based on Laravel 11 to compare differences between Blade
 
 use existing account:
 
+admin@heinze.com
+
+with password "12345678"
+
 https://chirps.heinze.com.pl/login
 
 Or Register your own at:
